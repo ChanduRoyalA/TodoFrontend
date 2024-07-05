@@ -9,7 +9,6 @@ function App() {
   return (
     <div className='bg-white'>
       <Routes>
-        <Route path='/' element={<p>Welcom/landing page</p>} />
         <Route path='/home' element={<Home />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/signup' element={<SignupPage />} />

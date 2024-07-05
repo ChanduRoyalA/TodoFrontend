@@ -14,6 +14,7 @@ export const Home = () => {
     const navigate = useNavigate();
     const handleSelection = (e) => {
         settype(e.target.value)
+        setdataFetched([])
     }
     useEffect(() => {
         getData();
@@ -26,7 +27,7 @@ export const Home = () => {
     }
     const getData = async () => {
         setisLoading(true)
-        const response = await fetch(`http://localhost:8080/api/todo/${type}`, {
+        const response = await fetch(`https://todobackend-6hfe.onrender.com/api/todo/${type}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -57,7 +58,7 @@ export const Home = () => {
 
     const handleMarkAsUnDone = async (id) => {
         const toastId = toast.loading('Making Changes...');
-        const response = await fetch(`http://localhost:8080/api/todo/markAsDoneAndUnDone/${id}`, {
+        const response = await fetch(`https://todobackend-6hfe.onrender.com/api/todo/markAsDoneAndUnDone/${id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -77,7 +78,7 @@ export const Home = () => {
 
     const handleDelete = async (id) => {
         const toastId = toast.loading('Making Changes...');
-        const response = await fetch(`http://localhost:8080/api/todo/deleteTodo/${id}`, {
+        const response = await fetch(`https://todobackend-6hfe.onrender.com/api/todo/deleteTodo/${id}`, {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json"
@@ -99,7 +100,7 @@ export const Home = () => {
     }
     const handlePriority = async (id) => {
         const toastId = toast.loading('Making Changes...');
-        const response = await fetch(`http://localhost:8080/api/todo/highPrioritNotHighPriority/${id}`, {
+        const response = await fetch(`https://todobackend-6hfe.onrender.com/api/todo/highPrioritNotHighPriority/${id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -122,7 +123,7 @@ export const Home = () => {
     const handleEdit = async (myObj) => {
         const toastId = toast.loading('Making Changes...');
         const { id, title, text, deadline } = myObj;
-        const response = await fetch(`http://localhost:8080/api/todo/editTodo/${id}`, {
+        const response = await fetch(`https://todobackend-6hfe.onrender.com/api/todo/editTodo/${id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
