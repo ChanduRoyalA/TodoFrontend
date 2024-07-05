@@ -97,6 +97,54 @@ export const Home = () => {
         }
 
     }
+    const handlePriority = async (id) => {
+        const toastId = toast.loading('Making Changes...');
+        const response = await fetch(`http://localhost:8080/api/todo/highPrioritNotHighPriority/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                userId: userId
+            })
+        })
+        const data = await response.json();
+        if (response.status === 200) {
+            toast.dismiss(toastId)
+            toast.success(data.message)
+            getData()
+        }
+        else {
+            toast.error(data.error)
+        }
+    }
+
+    const handleEdit = async (myObj) => {
+        const toastId = toast.loading('Making Changes...');
+        const { id, title, text, deadline } = myObj;
+        const response = await fetch(`http://localhost:8080/api/todo/editTodo/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                title,
+                text,
+                deadline,
+                userId
+            })
+        })
+
+        const data = await response.json();
+        if (response.status === 200) {
+            toast.dismiss(toastId)
+            toast.success(data.message)
+            getData()
+        }
+        else {
+            toast.error(data.error)
+        }
+    }
     return (
         <div className=' grid grid-cols-4 h-auto'>
             <div className=' col-span-1  h-screen flex flex-col p-10 gap-4 ' >
@@ -119,7 +167,7 @@ export const Home = () => {
                     isData ? <>
                         {
                             isLoading ? <div className='flex flex-col justify-center items-center p-10 h-1/2'><span className="loading loading-dots loading-lg text-green-400"></span></div> : <>{dataFetched.map((i) => (
-                                <TodoCard data={i} handleMarkAsUnDone={handleMarkAsUnDone} handleDelete={handleDelete} key={i._id} />
+                                <TodoCard data={i} handleMarkAsUnDone={handleMarkAsUnDone} handleDelete={handleDelete} handlePriority={handlePriority} handleEdit={handleEdit} key={i._id} />
                             ))}</>
                         }
                     </> : <div className='flex flex-col justify-center items-center p-10 h-1/2'>
