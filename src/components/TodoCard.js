@@ -18,8 +18,6 @@ const TodoCard = (props) => {
     const [mytitle, settitle] = useState('');
     const [myText, setmyText] = useState('')
 
-
-
     const { data, handleMarkAsUnDone, handleDelete, handlePriority, handleEdit } = props
     const { completed, deadline, text, title, _id, priority } = data
     const date = new Date(deadline)
@@ -52,20 +50,10 @@ const TodoCard = (props) => {
     };
     const handleSubmitDateTime = () => {
         if (dateTime.date && dateTime.time) {
-            // const dateTimeString = `${dateTime.date}T${dateTime.time}:00Z`; // Combine date and time into ISO format string
-            // const convertedateTime = new Date(dateTimeString); // Convert to Date object
-            // const isoDateTime = convertedateTime.toISOString(); // Convert to ISO string
-            // return isoDateTime
-            const dateTimeString = `${dateTime.date}T${dateTime.time}:00Z`; // Combine date and time into ISO format string
-            const convertedDateTime = new Date(dateTimeString); // Convert to Date object
-
-            // Calculate the offset in minutes for UTC-5:30 (-5 hours and -30 minutes = -330 minutes)
+            const dateTimeString = `${dateTime.date}T${dateTime.time}:00Z`;
+            const convertedDateTime = new Date(dateTimeString);
             const offsetInMinutes = -5 * 60 - 30;
-
-            // Adjust the Date object to the desired time zone by subtracting the offset
             convertedDateTime.setMinutes(convertedDateTime.getMinutes() + offsetInMinutes);
-
-            // Convert to ISO string
             const isoDateTime = convertedDateTime.toISOString();
 
             return isoDateTime;
@@ -78,9 +66,8 @@ const TodoCard = (props) => {
         settitle(e.target.value)
     }
     const handleText = (e) => {
-        {
-            setmyText(e.target.value)
-        }
+        setmyText(e.target.value)
+
     }
     const handleEditInHere = () => {
         const myObj = {
@@ -92,13 +79,12 @@ const TodoCard = (props) => {
 
         handleEdit(myObj);
     }
-    // console.log(seconds, minutes, hours, days)
     return (
-        <div className='bg-white shadow-2xl rounded-xl h-auto w-10/12 p-5 flex flex-col gap-2 my-2'>
+        <div className='bg-white shadow-2xl rounded-xl h-auto  w-10/12 p-5 flex flex-col gap-2 my-2'>
 
             <div className='flex items-center gap-4 w-auto justify-between '>
                 {
-                    isEdit ? <input type='text' placeholder='Title' className='text-black my-1 border-black focus:outline-none bg-slate-200 w-72 px-3 py-1' onChange={handleTitle} value={mytitle} /> : <h1 className='text-black font-semibold text-lg'>{title}</h1>
+                    isEdit ? <input type='text' placeholder={title} className='text-black my-1 border-black focus:outline-none bg-slate-200 w-72 px-3 py-1' onChange={handleTitle} value={mytitle} /> : <h1 className='text-black font-semibold text-lg'>{title}</h1>
                 }
                 {
                     isEdit ? <div className='flex gap-1'>
@@ -108,7 +94,7 @@ const TodoCard = (props) => {
                 }
             </div>
             {
-                isEdit ? <textarea className='text-black my-1 border-black focus:outline-none bg-slate-200  px-3 py-1' placeholder='Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries' onChange={handleText} value={myText}></textarea> : <p className='text-black text-sm'>{text}</p>
+                isEdit ? <textarea style={{ height: '150px' }} className='text-black my-1 border-black focus:outline-none bg-slate-200  px-3 py-1' placeholder={text} onChange={handleText} value={myText}></textarea> : <p className='text-black text-sm'>{text}</p>
             }
             {
                 !isEdit && <div className='p-3 flex  gap-2 justify-between mt-2'>
