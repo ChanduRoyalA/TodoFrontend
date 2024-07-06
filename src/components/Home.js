@@ -22,15 +22,20 @@ export const Home = () => {
         settype(e.target.value)
         setdataFetched([])
     }
-
+    const userId = Cookies.get("userId");
     useEffect(() => {
+        if (userId === undefined) {
+            navigate('/login');
+            return
+        }
         getData();
     }, [type])
 
-    const userId = Cookies.get("userId");
     if (userId === undefined) {
-        return <Navigate to="/login" />;
+        navigate('/login');
+        return
     }
+
     const getData = async () => {
         try {
             setisLoading(true)
@@ -44,7 +49,7 @@ export const Home = () => {
                 })
             })
             const data = await response.json();
-            if (response.status == 200) {
+            if (response.status === 200) {
                 setdataFetched(data)
                 if (data.length > 0) {
                     setisData(true)
